@@ -156,15 +156,6 @@
   <header class="bg-white border-b border-gray-200 shadow-sm py-5 px-6">
     <div class="max-w-4xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
       <div class="flex items-center space-x-3">
-        <!-- SVG recreation of official IBCA brand elements conforming to visual templates -->
-        <svg width="60" height="60" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0">
-          <circle cx="50" cy="50" r="45" stroke="#2D7D46" stroke-width="3" fill="#ffffff" />
-          <circle cx="35" cy="40" r="10" fill="#4A154B" />
-          <circle cx="65" cy="40" r="12" fill="#2D7D46" />
-          <circle cx="50" cy="70" r="8" fill="#5C2D91" />
-          <line x1="35" y1="40" x2="65" y2="40" stroke="#E2E8F0" stroke-width="2" />
-          <line x1="50" y1="70" x2="65" y2="40" stroke="#E2E8F0" stroke-width="2" />
-        </svg>
         <div>
           <h1 class="text-xl font-bold tracking-tight text-gray-900 leading-tight">
             Infected Blood Compensation Authority
@@ -956,10 +947,6 @@
       banner.classList.remove("hidden");
     }
 
-    function hideError() {
-      document.getElementById("error-banner").classList.add("hidden");
-    }
-
     // Capture selections: Scale Circle
     function selectScaleOption(questionId, value, buttonElement) {
       surveyAnswers[questionId] = value;
@@ -970,6 +957,10 @@
 
       buttonElement.classList.add("selected");
       document.getElementById("input-" + questionId).value = value;
+    }
+
+    function hideError() {
+      document.getElementById("error-banner").classList.add("hidden");
     }
 
     // Capture selections: Checkbox Group (With max 2 constraint)

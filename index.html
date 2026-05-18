@@ -180,7 +180,7 @@
       <!-- INTRO & PROGRESS -->
       <div class="p-6 md:p-8 border-b border-gray-100">
         <div class="flex justify-between items-center mb-4">
-          <span class="text-sm font-semibold uppercase tracking-wider text-emerald-700" id="tracker-label">IBCA Pulse Survey</span>
+          <span class="text-sm font-semibold uppercase tracking-wider text-emerald-700 hidden" id="tracker-label">IBCA Pulse Survey</span>
           <span class="text-xs bg-emerald-50 text-emerald-800 px-2 py-1 rounded font-semibold" id="time-badge">Estimated completion time: 2 minutes</span>
         </div>
         
@@ -866,6 +866,14 @@
       const percentage = (currentStepIndex / (steps.length - 1)) * 100;
       bar.style.width = percentage + "%";
       text.innerText = "Step " + (currentStepIndex + 1) + " of " + steps.length;
+
+      // Hide "IBCA Pulse Survey" tracker label on the first page (welcome screen)
+      const trackerLabel = document.getElementById("tracker-label");
+      if (currentStepIndex === 0) {
+        trackerLabel.classList.add("hidden");
+      } else {
+        trackerLabel.classList.remove("hidden");
+      }
     }
 
     // Validation Module
@@ -1179,6 +1187,7 @@
 
       document.getElementById("step-thankyou").classList.add("active");
       document.getElementById("tracker-label").innerText = "RESULTS RECEIVED";
+      document.getElementById("tracker-label").classList.remove("hidden");
       document.getElementById("time-badge").classList.add("hidden");
       document.getElementById("progress-bar").style.width = "100%";
       document.getElementById("progress-text").innerText = "Completed";

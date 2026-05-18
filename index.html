@@ -1,0 +1,1258 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="h-full bg-[#fcfbf9]">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IBCA Generative AI Pulse Survey</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ibcaGreen: '#1b4d3e',
+            ibcaGreenHover: '#13382d',
+            ibcaGreenLight: '#eef6f2',
+            ibcaPurple: '#5c2d91',
+            ibcaPurpleHover: '#482073',
+            ibcaPurpleLight: '#f3f0f7',
+            ibcaBorder: '#d1d5db',
+            ibcaText: '#2a2a2a',
+            ibcaMuted: '#595959',
+            ibcaError: '#b01212',
+            ibcaErrorBg: '#fdf2f2' 
+          },
+          fontFamily: {
+            sans: ['Arial', 'Calibri', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Strict adherence to IBCA Style Guide: No italics, no underlining */
+    * {
+      font-style: normal !important;
+      text-decoration-line: none !important;
+    }
+    body {
+      font-family: Arial, Calibri, sans-serif;
+      text-align: left; /* Always align text to the left */
+    }
+    input, textarea, select, button {
+      font-family: Arial, Calibri, sans-serif;
+    }
+    /* Accessible focus states */
+    input:focus, textarea:focus, select:focus {
+      outline: 3px solid #5c2d91;
+      outline-offset: 1px;
+    }
+  </style>
+</head>
+<body class="h-full text-ibcaText antialiased leading-[1.5] relative overflow-x-hidden">
+
+
+  <!-- Style Guide Compliant Decorative Brand Elements (Purple & Green Circles) -->
+  <div class="absolute top-[-100px] right-[-100px] w-96 h-96 rounded-full bg-ibcaGreen/5 blur-3xl pointer-events-none"></div>
+  <div class="absolute bottom-[-100px] left-[-100px] w-96 h-96 rounded-full bg-ibcaPurple/5 blur-3xl pointer-events-none"></div>
+  
+  <div class="min-h-screen flex flex-col justify-between py-8 px-4 sm:px-6 lg:px-8 relative z-10">
+    
+    <!-- Main Form Container -->
+    <main class="max-w-3xl w-full mx-auto bg-white border border-[#e5e7eb] rounded-xl shadow-sm p-6 sm:p-10 flex flex-col justify-between min-h-[600px]">
+      
+      <!-- Top Banner with Official IBCA Logo SVG and Metadata -->
+      <div>
+        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start border-b border-[#e5e7eb] pb-6 mb-8 gap-4">
+          <!-- Logo SVG constructed accurately from IBCA visual identity guidelines -->
+          <div class="flex-shrink-0" aria-label="Infected Blood Compensation Authority Logo">
+            <svg viewBox="0 0 350 90" width="220" height="56" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <text x="10" y="32" font-family="Arial, sans-serif" font-weight="bold" font-size="26" fill="#1b4d3e">Infected Blood</text>
+              <text x="10" y="56" font-family="Arial, sans-serif" font-weight="normal" font-size="18" fill="#2a2a2a">Compensation Authority</text>
+              <line x1="10" y1="74" x2="260" y2="74" stroke="#2a2a2a" stroke-width="1.5" />
+              <circle cx="135" cy="74" r="5" fill="#3d854c" />
+            </svg>
+          </div>
+          <!-- Survey Meta (Style Guide Compliant Date: 18 May 2026) -->
+          <div class="text-left sm:text-right text-sm text-ibcaMuted space-y-1">
+            <p>Date: 18 May 2026</p>
+            <p>Format: Digital Pulse</p>
+            <p>Reference: IBCA-GEN-AI</p>
+          </div>
+        </div>
+
+
+        <!-- Survey Heading Panel -->
+        <div id="survey-header" class="mb-8">
+          <h1 class="text-2xl sm:text-3xl font-bold text-ibcaGreen mb-2 leading-[1.2]">IBCA Generative AI Pulse</h1>
+          <p class="text-lg text-ibcaMuted mb-2">Help shape AI learning, confidence and adoption across IBCA.</p>
+          <div class="flex flex-wrap items-center gap-4 text-sm text-ibcaMuted bg-ibcaGreenLight/40 p-3 rounded-lg border border-ibcaGreen/10">
+            <span class="flex items-center gap-1.5">
+              <!-- SVG Clock Icon -->
+              <svg class="w-4 h-4 text-ibcaGreen" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              Estimated completion time: 2 minutes.
+            </span>
+            <span class="text-ibcaError font-medium">* Indicates required question</span>
+          </div>
+        </div>
+
+
+        <!-- Progress Indicator -->
+        <div id="progress-container" class="mb-8">
+          <div class="flex justify-between items-center text-sm font-medium text-ibcaMuted mb-2">
+            <span id="progress-step-label">Step 1 of 4: Welcome & Details</span>
+            <span id="progress-percentage">25% complete</span>
+          </div>
+          <div class="w-full bg-[#e5e7eb] rounded-full h-2.5">
+            <div id="progress-bar" class="bg-ibcaGreen h-2.5 rounded-full transition-all duration-300" style="width: 25%"></div>
+          </div>
+        </div>
+
+
+        <!-- Dynamic Warning Banner (Adhering to No-Alert rule) -->
+        <div id="error-banner" class="hidden mb-6 p-4 border-l-4 border-ibcaError bg-ibcaErrorBg rounded-r-md" role="alert">
+          <div class="flex items-start">
+            <div class="flex-shrink-0">
+              <svg class="h-5 w-5 text-ibcaError" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            </div>
+            <div class="ml-3">
+              <h3 class="text-sm font-bold text-ibcaError">We need you to check some answers</h3>
+              <p id="error-message" class="text-sm text-ibcaError mt-1">Please answer all required questions marked with an asterisk before you continue.</p>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- ==================== FORM STEPS ==================== -->
+        <form id="pulse-survey-form" class="space-y-8" onsubmit="event.preventDefault();">
+          
+          <!-- STEP 1: WELCOME & DETAILS -->
+          <div id="step-0" class="survey-step space-y-6">
+            <div class="bg-ibcaPurpleLight/50 p-5 rounded-lg border border-ibcaPurple/10 space-y-3">
+              <!-- Digital bullet point style guidelines check: lead-in line, lowercase start, no end punctuation, max 1 sentence per bullet -->
+              <p class="text-md font-bold text-ibcaPurple">We designed this digital pulse survey to:</p>
+              <ul class="list-disc pl-6 space-y-1.5 text-ibcaText text-md">
+                <li>understand how you currently use Generative AI tools</li>
+                <li>measure your confidence when using Gemini</li>
+                <li>identify what resources will help you feel more comfortable in your daily role</li>
+                <li>discover how much time you save each week</li>
+              </ul>
+              <p class="text-sm text-ibcaMuted pt-2">We process your answers securely and use them solely to support your learning journey across IBCA.</p>
+            </div>
+
+
+            <div class="border-t border-[#e5e7eb] pt-6 space-y-6">
+              <h2 class="text-lg font-bold text-ibcaGreen">Before you proceed, kindly provide your name and email address</h2>
+              
+              <!-- Question 1: Name -->
+              <div class="space-y-2">
+                <label for="input-name" class="block text-md font-bold text-ibcaText">
+                  1. Name <span class="text-ibcaError">*</span>
+                </label>
+                <input type="text" id="input-name" name="name" required
+                  class="w-full p-3 border border-ibcaBorder rounded-md text-md focus:border-ibcaPurple focus:ring-1 focus:ring-ibcaPurple"
+                  placeholder="Enter your full name">
+              </div>
+
+
+              <!-- Question 2: Email -->
+              <div class="space-y-2">
+                <label for="input-email" class="block text-md font-bold text-ibcaText">
+                  2. Email <span class="text-ibcaError">*</span>
+                </label>
+                <p class="text-sm text-ibcaMuted">work email address</p>
+                <input type="email" id="input-email" name="email" required
+                  class="w-full p-3 border border-ibcaBorder rounded-md text-md focus:border-ibcaPurple focus:ring-1 focus:ring-ibcaPurple"
+                  placeholder="name.surname@cabinetoffice.gov.uk">
+              </div>
+            </div>
+          </div>
+
+
+          <!-- STEP 2: AI FREQUENCY & UNDERSTANDING -->
+          <div id="step-1" class="survey-step hidden space-y-8">
+            <!-- Question 3 (Form Q1): Usage Frequency -->
+            <div class="space-y-4">
+              <label class="block text-md font-bold text-ibcaText">
+                1. How often do you currently use Generative Al tools (like Gemini) for work tasks? <span class="text-ibcaError">*</span>
+              </label>
+              <p class="text-sm text-ibcaMuted">Mark only one oval.</p>
+              <div class="grid grid-cols-1 gap-3">
+                <label class="flex items-center p-3 border border-ibcaBorder rounded-lg cursor-pointer hover:bg-ibcaGreenLight/30 hover:border-ibcaGreen transition duration-150">
+                  <input type="radio" name="useFrequency" value="Daily" class="h-5 w-5 text-ibcaGreen focus:ring-ibcaGreen border-ibcaBorder" required>
+                  <span class="ml-3 text-md text-ibcaText">Daily</span>
+                </label>
+                <label class="flex items-center p-3 border border-ibcaBorder rounded-lg cursor-pointer hover:bg-ibcaGreenLight/30 hover:border-ibcaGreen transition duration-150">
+                  <input type="radio" name="useFrequency" value="Weekly" class="h-5 w-5 text-ibcaGreen focus:ring-ibcaGreen border-ibcaBorder">
+                  <span class="ml-3 text-md text-ibcaText">Weekly</span>
+                </label>
+                <label class="flex items-center p-3 border border-ibcaBorder rounded-lg cursor-pointer hover:bg-ibcaGreenLight/30 hover:border-ibcaGreen transition duration-150">
+                  <input type="radio" name="useFrequency" value="Monthly" class="h-5 w-5 text-ibcaGreen focus:ring-ibcaGreen border-ibcaBorder">
+                  <span class="ml-3 text-md text-ibcaText">Monthly</span>
+                </label>
+                <label class="flex items-center p-3 border border-ibcaBorder rounded-lg cursor-pointer hover:bg-ibcaGreenLight/30 hover:border-ibcaGreen transition duration-150">
+                  <input type="radio" name="useFrequency" value="Rarely" class="h-5 w-5 text-ibcaGreen focus:ring-ibcaGreen border-ibcaBorder">
+                  <span class="ml-3 text-md text-ibcaText">Rarely</span>
+                </label>
+                <label class="flex items-center p-3 border border-ibcaBorder rounded-lg cursor-pointer hover:bg-ibcaGreenLight/30 hover:border-ibcaGreen transition duration-150">
+                  <input type="radio" name="useFrequency" value="Never" class="h-5 w-5 text-ibcaGreen focus:ring-ibcaGreen border-ibcaBorder">
+                  <span class="ml-3 text-md text-ibcaText">Never</span>
+                </label>
+              </div>
+            </div>
+
+
+            <!-- Question 4 (Form Q2): Confidence Level -->
+            <div class="space-y-4 border-t border-[#e5e7eb] pt-6">
+              <label class="block text-md font-bold text-ibcaText">
+                2. How confident are you in your understanding of what Generative Al is and how it works? <span class="text-ibcaError">*</span>
+              </label>
+              <p class="text-sm text-ibcaMuted">Mark only one oval.</p>
+              
+              <!-- Elegant interactive 1-5 Scale Cards -->
+              <div class="grid grid-cols-5 gap-2 sm:gap-4">
+                <label class="flex flex-col items-center p-3 border border-ibcaBorder rounded-lg cursor-pointer hover:bg-ibcaPurpleLight hover:border-ibcaPurple transition text-center">
+                  <span class="text-md font-bold mb-1">1</span>
+                  <input type="radio" name="confidence" value="1" class="h-4 w-4 text-ibcaPurple focus:ring-ibcaPurple" required>
+                  <span class="text-xs text-ibcaMuted mt-2">Very</span>
+                </label>
+                <label class="flex flex-col items-center p-3 border border-ibcaBorder rounded-lg cursor-pointer hover:bg-ibcaPurpleLight hover:border-ibcaPurple transition text-center justify-between">
+                  <span class="text-md font-bold mb-1">2</span>
+                  <input type="radio" name="confidence" value="2" class="h-4 w-4 text-ibcaPurple focus:ring-ibcaPurple">
+                  <span class="text-xs text-ibcaMuted mt-2"></span>
+                </label>
+                <label class="flex flex-col items-center p-3 border border-ibcaBorder rounded-lg cursor-pointer hover:bg-ibcaPurpleLight hover:border-ibcaPurple transition text-center justify-between">
+                  <span class="text-md font-bold mb-1">3</span>
+                  <input type="radio" name="confidence" value="3" class="h-4 w-4 text-ibcaPurple focus:ring-ibcaPurple">
+                  <span class="text-xs text-ibcaMuted mt-2"></span>
+                </label>
+                <label class="flex flex-col items-center p-3 border border-ibcaBorder rounded-lg cursor-pointer hover:bg-ibcaPurpleLight hover:border-ibcaPurple transition text-center justify-between">
+                  <span class="text-md font-bold mb-1">4</span>
+                  <input type="radio" name="confidence" value="4" class="h-4 w-4 text-ibcaPurple focus:ring-ibcaPurple">
+                  <span class="text-xs text-ibcaMuted mt-2"></span>
+                </label>
+                <label class="flex flex-col items-center p-3 border border-ibcaBorder rounded-lg cursor-pointer hover:bg-ibcaPurpleLight hover:border-ibcaPurple transition text-center">
+                  <span class="text-md font-bold mb-1">5</span>
+                  <input type="radio" name="confidence" value="5" class="h-4 w-4 text-ibcaPurple focus:ring-ibcaPurple">
+                  <span class="text-xs text-ibcaMuted mt-2 font-medium">Very Confident</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- STEP 3: COMFORT & UTILITY -->
+          <div id="step-2" class="survey-step hidden space-y-8">
+            <!-- Question 5 (Form Q3): Comfort Level -->
+            <div class="space-y-4">
+              <label class="block text-md font-bold text-ibcaText">
+                3. How comfortable do you currently feel using Gemini in your day-to-day role? <span class="text-ibcaError">*</span>
+              </label>
+              <p class="text-sm text-ibcaMuted">Mark only one oval.</p>
+              
+              <!-- Scale Cards for Comfort -->
+              <div class="grid grid-cols-5 gap-2 sm:gap-4">
+                <label class="flex flex-col items-center p-3 border border-ibcaBorder rounded-lg cursor-pointer hover:bg-ibcaPurpleLight hover:border-ibcaPurple transition text-center">
+                  <span class="text-md font-bold mb-1">1</span>
+                  <input type="radio" name="comfort" value="1" class="h-4 w-4 text-ibcaPurple focus:ring-ibcaPurple" required>
+                  <span class="text-xs text-ibcaMuted mt-2">Very</span>
+                </label>
+                <label class="flex flex-col items-center p-3 border border-ibcaBorder rounded-lg cursor-pointer hover:bg-ibcaPurpleLight hover:border-ibcaPurple transition text-center justify-between">
+                  <span class="text-md font-bold mb-1">2</span>
+                  <input type="radio" name="comfort" value="2" class="h-4 w-4 text-ibcaPurple focus:ring-ibcaPurple">
+                  <span class="text-xs text-ibcaMuted mt-2"></span>
+                </label>
+                <label class="flex flex-col items-center p-3 border border-ibcaBorder rounded-lg cursor-pointer hover:bg-ibcaPurpleLight hover:border-ibcaPurple transition text-center justify-between">
+                  <span class="text-md font-bold mb-1">3</span>
+                  <input type="radio" name="comfort" value="3" class="h-4 w-4 text-ibcaPurple focus:ring-ibcaPurple">
+                  <span class="text-xs text-ibcaMuted mt-2"></span>
+                </label>
+                <label class="flex flex-col items-center p-3 border border-ibcaBorder rounded-lg cursor-pointer hover:bg-ibcaPurpleLight hover:border-ibcaPurple transition text-center justify-between">
+                  <span class="text-md font-bold mb-1">4</span>
+                  <input type="radio" name="comfort" value="4" class="h-4 w-4 text-ibcaPurple focus:ring-ibcaPurple">
+                  <span class="text-xs text-ibcaMuted mt-2"></span>
+                </label>
+                <label class="flex flex-col items-center p-3 border border-ibcaBorder rounded-lg cursor-pointer hover:bg-ibcaPurpleLight hover:border-ibcaPurple transition text-center">
+                  <span class="text-md font-bold mb-1">5</span>
+                  <input type="radio" name="comfort" value="5" class="h-4 w-4 text-ibcaPurple focus:ring-ibcaPurple">
+                  <span class="text-xs text-ibcaMuted mt-2 font-medium">Very Comfortable</span>
+                </label>
+              </div>
+            </div>
+
+
+            <!-- Question 6 (Form Q4): Usefulness -->
+            <div class="space-y-4 border-t border-[#e5e7eb] pt-6">
+              <label class="block text-md font-bold text-ibcaText">
+                4. How useful do you think Generative Al could be in improving the efficiency and quality of your work? <span class="text-ibcaError">*</span>
+              </label>
+              <p class="text-sm text-ibcaMuted">Mark only one oval.</p>
+              <div class="grid grid-cols-1 gap-3">
+                <label class="flex items-center p-3 border border-ibcaBorder rounded-lg cursor-pointer hover:bg-ibcaGreenLight/30 hover:border-ibcaGreen transition duration-150">
+                  <input type="radio" name="usefulness" value="1- Not at all useful" class="h-5 w-5 text-ibcaGreen focus:ring-ibcaGreen border-ibcaBorder" required>
+                  <span class="ml-3 text-md text-ibcaText">1- Not at all useful</span>
+                </label>
+                <label class="flex items-center p-3 border border-ibcaBorder rounded-lg cursor-pointer hover:bg-ibcaGreenLight/30 hover:border-ibcaGreen transition duration-150">
+                  <input type="radio" name="usefulness" value="2- Slightly useful" class="h-5 w-5 text-ibcaGreen focus:ring-ibcaGreen border-ibcaBorder">
+                  <span class="ml-3 text-md text-ibcaText">2- Slightly useful</span>
+                </label>
+                <label class="flex items-center p-3 border border-ibcaBorder rounded-lg cursor-pointer hover:bg-ibcaGreenLight/30 hover:border-ibcaGreen transition duration-150">
+                  <input type="radio" name="usefulness" value="3- Moderately useful" class="h-5 w-5 text-ibcaGreen focus:ring-ibcaGreen border-ibcaBorder">
+                  <span class="ml-3 text-md text-ibcaText">3- Moderately useful</span>
+                </label>
+                <label class="flex items-center p-3 border border-ibcaBorder rounded-lg cursor-pointer hover:bg-ibcaGreenLight/30 hover:border-ibcaGreen transition duration-150">
+                  <input type="radio" name="usefulness" value="4 - Very useful" class="h-5 w-5 text-ibcaGreen focus:ring-ibcaGreen border-ibcaBorder">
+                  <span class="ml-3 text-md text-ibcaText">4 - Very useful</span>
+                </label>
+                <label class="flex items-center p-3 border border-ibcaBorder rounded-lg cursor-pointer hover:bg-ibcaGreenLight/30 hover:border-ibcaGreen transition duration-150">
+                  <input type="radio" name="usefulness" value="5- Extremely useful" class="h-5 w-5 text-ibcaGreen focus:ring-ibcaGreen border-ibcaBorder">
+                  <span class="ml-3 text-md text-ibcaText">5- Extremely useful</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- STEP 4: TIME SAVED, CONCERNS & NOTEBOOKLM -->
+          <div id="step-3" class="survey-step hidden space-y-8">
+            <!-- Question 7 (Form Q5): Time Saved -->
+            <div class="space-y-4">
+              <label class="block text-md font-bold text-ibcaText">
+                5. If you use Al, how much time do you feel it currently saves you per week? <span class="text-ibcaError">*</span>
+              </label>
+              <p class="text-sm text-ibcaMuted">Mark only one oval.</p>
+              <div class="grid grid-cols-1 gap-3">
+                <label class="flex items-center p-3 border border-ibcaBorder rounded-lg cursor-pointer hover:bg-ibcaGreenLight/30 hover:border-ibcaGreen transition duration-150">
+                  <input type="radio" name="timeSaved" value="0-2 hours" class="h-5 w-5 text-ibcaGreen focus:ring-ibcaGreen border-ibcaBorder" required>
+                  <span class="ml-3 text-md text-ibcaText">0-2 hours</span>
+                </label>
+                <label class="flex items-center p-3 border border-ibcaBorder rounded-lg cursor-pointer hover:bg-ibcaGreenLight/30 hover:border-ibcaGreen transition duration-150">
+                  <input type="radio" name="timeSaved" value="3-5 hours" class="h-5 w-5 text-ibcaGreen focus:ring-ibcaGreen border-ibcaBorder">
+                  <span class="ml-3 text-md text-ibcaText">3-5 hours</span>
+                </label>
+                <label class="flex items-center p-3 border border-ibcaBorder rounded-lg cursor-pointer hover:bg-ibcaGreenLight/30 hover:border-ibcaGreen transition duration-150">
+                  <input type="radio" name="timeSaved" value="6-10 hours" class="h-5 w-5 text-ibcaGreen focus:ring-ibcaGreen border-ibcaBorder">
+                  <span class="ml-3 text-md text-ibcaText">6-10 hours</span>
+                </label>
+                <label class="flex items-center p-3 border border-ibcaBorder rounded-lg cursor-pointer hover:bg-ibcaGreenLight/30 hover:border-ibcaGreen transition duration-150">
+                  <input type="radio" name="timeSaved" value="10+ hours" class="h-5 w-5 text-ibcaGreen focus:ring-ibcaGreen border-ibcaBorder">
+                  <span class="ml-3 text-md text-ibcaText">10+ hours</span>
+                </label>
+              </div>
+            </div>
+
+
+            <!-- Question 8 (Form Q6): Biggest Concerns -->
+            <div class="space-y-4 border-t border-[#e5e7eb] pt-6">
+              <div class="flex justify-between items-start">
+                <div>
+                  <label class="block text-md font-bold text-ibcaText">
+                    6. What is your biggest concern regarding the use of Generative Al at work? (Select up to two)
+                  </label>
+                  <p class="text-sm text-ibcaMuted">Tick all that apply.</p>
+                </div>
+                <span id="concern-badge" class="bg-ibcaPurpleLight text-ibcaPurple px-2.5 py-1 rounded-full text-xs font-bold whitespace-nowrap">0 selected</span>
+              </div>
+              <div id="concerns-list" class="grid grid-cols-1 gap-3">
+                <label class="flex items-start p-3 border border-ibcaBorder rounded-lg cursor-pointer hover:bg-ibcaPurpleLight/30 hover:border-ibcaPurple transition duration-150">
+                  <input type="checkbox" name="concerns" value="Data privacy and security" class="h-5 w-5 text-ibcaPurple focus:ring-ibcaPurple border-ibcaBorder rounded mt-0.5">
+                  <span class="ml-3 text-md text-ibcaText">Data privacy and security</span>
+                </label>
+                <label class="flex items-start p-3 border border-ibcaBorder rounded-lg cursor-pointer hover:bg-ibcaPurpleLight/30 hover:border-ibcaPurple transition duration-150">
+                  <input type="checkbox" name="concerns" value="Inaccurate information or &quot;hallucinations&quot;" class="h-5 w-5 text-ibcaPurple focus:ring-ibcaPurple border-ibcaBorder rounded mt-0.5">
+                  <span class="ml-3 text-md text-ibcaText">Inaccurate information or "hallucinations"</span>
+                </label>
+                <label class="flex items-start p-3 border border-ibcaBorder rounded-lg cursor-pointer hover:bg-ibcaPurpleLight/30 hover:border-ibcaPurple transition duration-150">
+                  <input type="checkbox" name="concerns" value="Lack of time to learn how to use it" class="h-5 w-5 text-ibcaPurple focus:ring-ibcaPurple border-ibcaBorder rounded mt-0.5">
+                  <span class="ml-3 text-md text-ibcaText">Lack of time to learn how to use it</span>
+                </label>
+                <label class="flex items-start p-3 border border-ibcaBorder rounded-lg cursor-pointer hover:bg-ibcaPurpleLight/30 hover:border-ibcaPurple transition duration-150">
+                  <input type="checkbox" name="concerns" value="Don't know what use cases apply to my role" class="h-5 w-5 text-ibcaPurple focus:ring-ibcaPurple border-ibcaBorder rounded mt-0.5">
+                  <span class="ml-3 text-md text-ibcaText">Don't know what use cases apply to my role</span>
+                </label>
+                <label class="flex items-start p-3 border border-ibcaBorder rounded-lg cursor-pointer hover:bg-ibcaPurpleLight/30 hover:border-ibcaPurple transition duration-150">
+                  <input type="checkbox" name="concerns" value="Fear of it replacing aspects of my job" class="h-5 w-5 text-ibcaPurple focus:ring-ibcaPurple border-ibcaBorder rounded mt-0.5">
+                  <span class="ml-3 text-md text-ibcaText">Fear of it replacing aspects of my job</span>
+                </label>
+                <label class="flex items-start p-3 border border-ibcaBorder rounded-lg cursor-pointer hover:bg-ibcaPurpleLight/30 hover:border-ibcaPurple transition duration-150">
+                  <input type="checkbox" name="concerns" value="I do not have any concerns" id="no-concerns" class="h-5 w-5 text-ibcaPurple focus:ring-ibcaPurple border-ibcaBorder rounded mt-0.5">
+                  <span class="ml-3 text-md text-ibcaText">I do not have any concerns</span>
+                </label>
+                
+                <!-- "Other" option with expanding text input block -->
+                <div class="border border-ibcaBorder rounded-lg p-3 space-y-3 transition duration-150" id="other-container">
+                  <label class="flex items-start cursor-pointer">
+                    <input type="checkbox" id="concern-other-check" name="concerns" value="Other" class="h-5 w-5 text-ibcaPurple focus:ring-ibcaPurple border-ibcaBorder rounded mt-0.5">
+                    <span class="ml-3 text-md text-ibcaText">Other:</span>
+                  </label>
+                  <input type="text" id="concern-other-text" name="concerns_other" disabled
+                    class="w-full p-2 border border-ibcaBorder rounded-md text-md focus:border-ibcaPurple focus:ring-1 focus:ring-ibcaPurple bg-gray-50 transition-colors"
+                    placeholder="Please specify your other concern">
+                </div>
+              </div>
+              <p id="concern-limit-warning" class="hidden text-sm text-ibcaError font-bold">You can select a maximum of two concerns. Please deselect an option to select another.</p>
+            </div>
+          </div>
+
+
+          <!-- STEP 5: NOTEBOOKLM & COMMENTS -->
+          <div id="step-4" class="survey-step hidden space-y-8">
+            <!-- Question 9 (Form Q7): NotebookLM usage -->
+            <div class="space-y-4">
+              <label class="block text-md font-bold text-ibcaText">
+                7. Have you used NotebookLM, if at all? <span class="text-ibcaError">*</span>
+              </label>
+              <p class="text-sm text-ibcaMuted">Mark only one oval.</p>
+              <div class="grid grid-cols-1 gap-3">
+                <label class="flex items-center p-3 border border-ibcaBorder rounded-lg cursor-pointer hover:bg-ibcaGreenLight/30 hover:border-ibcaGreen transition duration-150">
+                  <input type="radio" name="notebookLM" value="I have not used it" class="h-5 w-5 text-ibcaGreen focus:ring-ibcaGreen border-ibcaBorder" required>
+                  <span class="ml-3 text-md text-ibcaText">I have not used it</span>
+                </label>
+                <label class="flex items-center p-3 border border-ibcaBorder rounded-lg cursor-pointer hover:bg-ibcaGreenLight/30 hover:border-ibcaGreen transition duration-150">
+                  <input type="radio" name="notebookLM" value="I have explored it briefly" class="h-5 w-5 text-ibcaGreen focus:ring-ibcaGreen border-ibcaBorder">
+                  <span class="ml-3 text-md text-ibcaText">I have explored it briefly</span>
+                </label>
+                <label class="flex items-center p-3 border border-ibcaBorder rounded-lg cursor-pointer hover:bg-ibcaGreenLight/30 hover:border-ibcaGreen transition duration-150">
+                  <input type="radio" name="notebookLM" value="I use it occassionally for work" class="h-5 w-5 text-ibcaGreen focus:ring-ibcaGreen border-ibcaBorder">
+                  <span class="ml-3 text-md text-ibcaText">I use it occassionally for work</span>
+                </label>
+                <label class="flex items-center p-3 border border-ibcaBorder rounded-lg cursor-pointer hover:bg-ibcaGreenLight/30 hover:border-ibcaGreen transition duration-150">
+                  <input type="radio" name="notebookLM" value="I use it regularly in my role" class="h-5 w-5 text-ibcaGreen focus:ring-ibcaGreen border-ibcaBorder">
+                  <span class="ml-3 text-md text-ibcaText">I use it regularly in my role</span>
+                </label>
+                <label class="flex items-center p-3 border border-ibcaBorder rounded-lg cursor-pointer hover:bg-ibcaGreenLight/30 hover:border-ibcaGreen transition duration-150">
+                  <input type="radio" name="notebookLM" value="I am unsure what NotebookLM is" class="h-5 w-5 text-ibcaGreen focus:ring-ibcaGreen border-ibcaBorder">
+                  <span class="ml-3 text-md text-ibcaText">I am unsure what NotebookLM is</span>
+                </label>
+              </div>
+            </div>
+
+
+            <!-- Question 10 (Form Q8): Support / Resources -->
+            <div class="space-y-4 border-t border-[#e5e7eb] pt-6">
+              <label for="input-support" class="block text-md font-bold text-ibcaText">
+                8. What specific support, training, or resources would help you feel more confident using Gemini?
+              </label>
+              <textarea id="input-support" name="support" rows="4"
+                class="w-full p-3 border border-ibcaBorder rounded-md text-md focus:border-ibcaPurple focus:ring-1 focus:ring-ibcaPurple"
+                placeholder="We value your input. Please share any suggestions or resources you feel would help."></textarea>
+            </div>
+          </div>
+          
+        </form>
+
+
+        <!-- ==================== POST-SUBMISSION INSIGHTS DASHBOARD ==================== -->
+        <div id="insights-dashboard" class="hidden space-y-8">
+          <div class="p-6 bg-ibcaGreenLight/40 rounded-lg border border-ibcaGreen/20 space-y-4">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-ibcaGreen flex items-center justify-center text-white font-bold text-lg">✓</div>
+              <div>
+                <h2 class="text-xl font-bold text-ibcaGreen">We have recorded your survey answers</h2>
+                <p id="thanks-personal" class="text-md text-ibcaText">Thank you, [User Name]. Your input helps us direct resources where they are needed most.</p>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- Dynamic Tabs to switch view -->
+          <div class="flex border-b border-[#e5e7eb]">
+            <button id="tab-summary-btn" onclick="switchDashboardTab('summary')" class="py-2.5 px-4 text-md font-bold border-b-2 border-ibcaGreen text-ibcaGreen focus:outline-none">
+              Your Response Receipt
+            </button>
+            <button id="tab-charts-btn" onclick="switchDashboardTab('charts')" class="py-2.5 px-4 text-md font-bold border-b-2 border-transparent text-ibcaMuted hover:text-ibcaText focus:outline-none">
+              Live IBCA AI Pulse Insights
+            </button>
+          </div>
+
+
+          <!-- Tab Panel A: Response Receipt -->
+          <div id="tab-summary" class="space-y-6">
+            <p class="text-md text-ibcaText mt-2">Below is a summary of the responses we saved for your profile. You can download or print this receipt for your records.</p>
+            <div id="receipt-content" class="bg-[#fcfbf9] border border-ibcaBorder rounded-lg p-5 text-sm space-y-4 font-mono text-ibcaText">
+              <!-- Dynamically populated -->
+            </div>
+            <div class="flex flex-wrap gap-3 pt-2">
+              <button onclick="downloadReceipt()" class="bg-ibcaPurple hover:bg-ibcaPurpleHover text-white text-md font-bold py-2.5 px-6 rounded-md transition duration-150 inline-flex items-center gap-2">
+                <!-- SVG Download Icon -->
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                Download Receipt Text File
+              </button>
+              <button onclick="copyToClipboard()" id="copy-btn" class="border border-ibcaPurple hover:bg-ibcaPurpleLight text-ibcaPurple text-md font-bold py-2.5 px-6 rounded-md transition duration-150 inline-flex items-center gap-2">
+                <!-- SVG Copy Icon -->
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                Copy Response Receipt
+              </button>
+            </div>
+          </div>
+
+
+          <!-- Tab Panel B: Live Interactive Aggregate Analytics -->
+          <div id="tab-charts" class="hidden space-y-8">
+            <p class="text-md text-ibcaText mt-2">See how your answers align with the pulse of AI adoption across IBCA. This interactive panel refreshes live with simulated responses from our collaborative learning pool.</p>
+            
+            <!-- Graphic Card 1: AI Tool Usage Frequency bar chart -->
+            <div class="border border-ibcaBorder rounded-xl p-5 space-y-4">
+              <h3 class="text-md font-bold text-ibcaGreen">How often do we use Generative AI tools?</h3>
+              <p class="text-sm text-ibcaMuted">Calculated across 1,240 active participants across Cabinet Office and associated agencies.</p>
+              <div class="space-y-3 pt-2">
+                <!-- Daily -->
+                <div class="space-y-1">
+                  <div class="flex justify-between text-xs font-bold text-ibcaText">
+                    <span>Daily</span>
+                    <span>32%</span>
+                  </div>
+                  <div class="w-full bg-[#e5e7eb] rounded-full h-4">
+                    <div class="bg-ibcaGreen h-4 rounded-full transition-all duration-1000" style="width: 32%"></div>
+                  </div>
+                </div>
+                <!-- Weekly -->
+                <div class="space-y-1">
+                  <div class="flex justify-between text-xs font-bold text-ibcaText">
+                    <span>Weekly</span>
+                    <span>45%</span>
+                  </div>
+                  <div class="w-full bg-[#e5e7eb] rounded-full h-4">
+                    <div class="bg-ibcaGreen h-4 rounded-full transition-all duration-1000" style="width: 45%"></div>
+                  </div>
+                </div>
+                <!-- Monthly -->
+                <div class="space-y-1">
+                  <div class="flex justify-between text-xs font-bold text-ibcaText">
+                    <span>Monthly</span>
+                    <span>12%</span>
+                  </div>
+                  <div class="w-full bg-[#e5e7eb] rounded-full h-4">
+                    <div class="bg-ibcaGreen h-4 rounded-full transition-all duration-1000" style="width: 12%"></div>
+                  </div>
+                </div>
+                <!-- Rarely -->
+                <div class="space-y-1">
+                  <div class="flex justify-between text-xs font-bold text-ibcaText">
+                    <span>Rarely</span>
+                    <span>8%</span>
+                  </div>
+                  <div class="w-full bg-[#e5e7eb] rounded-full h-4">
+                    <div class="bg-ibcaGreen/60 h-4 rounded-full transition-all duration-1000" style="width: 8%"></div>
+                  </div>
+                </div>
+                <!-- Never -->
+                <div class="space-y-1">
+                  <div class="flex justify-between text-xs font-bold text-ibcaText">
+                    <span>Never</span>
+                    <span>3%</span>
+                  </div>
+                  <div class="w-full bg-[#e5e7eb] rounded-full h-4">
+                    <div class="bg-ibcaGreen/30 h-4 rounded-full transition-all duration-1000" style="width: 3%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <!-- Graphic Card 2: Interactive Donut Charts / Numbers -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="border border-ibcaBorder rounded-xl p-5 space-y-4">
+                <h4 class="text-md font-bold text-ibcaPurple">Gemini Confidence Index</h4>
+                <div class="flex items-center gap-4">
+                  <div class="relative w-24 h-24 flex items-center justify-center">
+                    <!-- SVG Circular Progress Bar -->
+                    <svg class="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+                      <path class="text-[#e5e7eb]" stroke-width="3" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                      <path class="text-ibcaPurple" stroke-dasharray="78, 100" stroke-width="3" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                    </svg>
+                    <span class="absolute text-xl font-bold text-ibcaPurple">3.9/5</span>
+                  </div>
+                  <div>
+                    <p class="text-md font-bold text-ibcaText">Highly confident</p>
+                    <p class="text-sm text-ibcaMuted">Average rating of IBCA members' understanding of Generative AI principles.</p>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="border border-ibcaBorder rounded-xl p-5 space-y-4">
+                <h4 class="text-md font-bold text-ibcaPurple">Gemini Comfort Index</h4>
+                <div class="flex items-center gap-4">
+                  <div class="relative w-24 h-24 flex items-center justify-center">
+                    <!-- SVG Circular Progress Bar -->
+                    <svg class="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+                      <path class="text-[#e5e7eb]" stroke-width="3" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                      <path class="text-ibcaPurple" stroke-dasharray="72, 100" stroke-width="3" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                    </svg>
+                    <span class="absolute text-xl font-bold text-ibcaPurple">3.6/5</span>
+                  </div>
+                  <div>
+                    <p class="text-md font-bold text-ibcaText">Growing Comfort</p>
+                    <p class="text-sm text-ibcaMuted">Average day-to-day comfort levels when applying Gemini across various workflow duties.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <!-- Graphic Card 3: Horizontal Concerns Bar Charts -->
+            <div class="border border-ibcaBorder rounded-xl p-5 space-y-4">
+              <h3 class="text-md font-bold text-ibcaGreen">Primary Concerns Raised across IBCA</h3>
+              <p class="text-sm text-ibcaMuted">Understanding top friction points helps us prioritize security parameters and education.</p>
+              <div class="space-y-3 pt-2">
+                <div>
+                  <div class="flex justify-between text-xs text-ibcaText mb-1">
+                    <span>Data privacy and security</span>
+                    <span class="font-bold">64%</span>
+                  </div>
+                  <div class="w-full bg-[#e5e7eb] rounded-full h-2">
+                    <div class="bg-ibcaPurple h-2 rounded-full" style="width: 64%"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex justify-between text-xs text-ibcaText mb-1">
+                    <span>Inaccurate information or "hallucinations"</span>
+                    <span class="font-bold">58%</span>
+                  </div>
+                  <div class="w-full bg-[#e5e7eb] rounded-full h-2">
+                    <div class="bg-ibcaPurple h-2 rounded-full" style="width: 58%"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex justify-between text-xs text-ibcaText mb-1">
+                    <span>Don't know what use cases apply to my role</span>
+                    <span class="font-bold">42%</span>
+                  </div>
+                  <div class="w-full bg-[#e5e7eb] rounded-full h-2">
+                    <div class="bg-ibcaPurple h-2 rounded-full" style="width: 42%"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex justify-between text-xs text-ibcaText mb-1">
+                    <span>Lack of time to learn how to use it</span>
+                    <span class="font-bold">29%</span>
+                  </div>
+                  <div class="w-full bg-[#e5e7eb] rounded-full h-2">
+                    <div class="bg-ibcaPurple h-2 rounded-full" style="width: 29%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <!-- Restart Button -->
+            <div class="pt-4 flex justify-start">
+              <button onclick="resetSurvey()" class="border border-ibcaGreen hover:bg-ibcaGreenLight text-ibcaGreen text-md font-bold py-2 px-4 rounded-md transition duration-150">
+                Submit Another Response
+              </button>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+
+
+      <!-- ==================== FORM NAVIGATION CONTROLS ==================== -->
+      <div id="navigation-controls" class="flex justify-between items-center border-t border-[#e5e7eb] pt-6 mt-8">
+        <button type="button" id="prev-btn" onclick="navigateStep(-1)" disabled
+          class="px-5 py-2.5 border border-ibcaBorder text-md font-bold rounded-md text-ibcaMuted hover:bg-[#fcfbf9] disabled:opacity-50 disabled:pointer-events-none transition duration-150">
+          Back
+        </button>
+        <button type="button" id="next-btn" onclick="navigateStep(1)"
+          class="px-6 py-2.5 bg-ibcaGreen hover:bg-ibcaGreenHover text-white text-md font-bold rounded-md transition duration-150 focus:ring-4 focus:ring-ibcaGreen/20">
+          Next
+        </button>
+      </div>
+
+
+    </main>
+
+
+    <!-- Style Guide Compliant Accessible Footer -->
+    <footer class="max-w-3xl w-full mx-auto mt-6 text-left px-2 text-xs text-ibcaMuted space-y-2">
+      <p class="border-t border-[#e5e7eb] pt-4">This survey application runs locally inside an isolated client container. All answers remain completely private on your machine until explicit export.</p>
+      <div class="flex flex-wrap justify-between gap-2 text-xs">
+        <p>&copy; 2026 Infected Blood Compensation Authority (IBCA). All rights reserved.</p>
+        <div class="flex gap-4">
+          <span class="text-ibcaMuted hover:text-ibcaText">Privacy Statement</span>
+          <span class="text-ibcaMuted hover:text-ibcaText">Contact Support</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+
+  <!-- Dynamic Notification Box for custom warnings -->
+  <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 max-w-sm w-full bg-[#2a2a2a] text-white p-4 rounded-lg shadow-lg flex items-center gap-3" role="alert">
+    <div class="w-2 h-2 rounded-full bg-ibcaPurple"></div>
+    <p id="toast-message" class="text-sm font-medium">Notification message</p>
+  </div>
+
+
+  <!-- ==================== SURVEY CONTROL SCRIPT ==================== -->
+  <script>
+    // State management
+    const totalSteps = 5; // Step 0 (welcome/credentials), Step 1, Step 2, Step 3, Step 4 (comments)
+    let currentStep = 0;
+    
+    // Exact Form Answers Object
+    const state = {
+      name: '',
+      email: '',
+      useFrequency: '',
+      confidence: '',
+      comfort: '',
+      usefulness: '',
+      timeSaved: '',
+      concerns: [],
+      concernsOther: '',
+      notebookLM: '',
+      support: ''
+    };
+
+
+    // DOM Reference Cache
+    const form = document.getElementById('pulse-survey-form');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const errorBanner = document.getElementById('error-banner');
+    const errorMessage = document.getElementById('error-message');
+    const progressLabel = document.getElementById('progress-step-label');
+    const progressPercent = document.getElementById('progress-percentage');
+    const progressBar = document.getElementById('progress-bar');
+    const insightsDashboard = document.getElementById('insights-dashboard');
+    const navControls = document.getElementById('navigation-controls');
+    const surveyHeader = document.getElementById('survey-header');
+    const progressContainer = document.getElementById('progress-container');
+
+
+    const stepLabelText = [
+      "Step 1 of 4: Welcome & Details",
+      "Step 2 of 4: Usage & Understanding",
+      "Step 3 of 4: Experience & Utility",
+      "Step 4 of 4: Concerns & Feedback",
+      "Step 5 of 4: Support Planning" // Step 5 is reviewing and saving
+    ];
+
+
+    // Load initial listeners
+    window.onload = function() {
+      setupCheckboxHandlers();
+      // Start flow by showing Step 0
+      showStep(0);
+    };
+
+
+    // Navigation logic with robust validation
+    function navigateStep(direction) {
+      if (direction === 1) {
+        // Run validation check before moving forward
+        if (!validateCurrentStep()) {
+          showErrorBanner();
+          return;
+        }
+        hideErrorBanner();
+      }
+
+
+      // If we are at the final step, submit form on clicking "Next" (which becomes "Submit")
+      if (currentStep === totalSteps - 1 && direction === 1) {
+        submitForm();
+        return;
+      }
+
+
+      // Progress step index
+      currentStep += direction;
+      showStep(currentStep);
+    }
+
+
+    // Displays the correct step and updates progress metrics
+    function showStep(stepIndex) {
+      document.querySelectorAll('.survey-step').forEach(el => el.classList.add('hidden'));
+      const activeStepEl = document.getElementById(`step-${stepIndex}`);
+      if (activeStepEl) {
+        activeStepEl.classList.remove('hidden');
+      }
+
+
+      // Update progress graphics
+      const progressPercentValue = Math.round(((stepIndex + 1) / totalSteps) * 100);
+      progressBar.style.width = `${progressPercentValue}%`;
+      progressPercent.textContent = `${progressPercentValue}% complete`;
+      
+      if (stepIndex < stepLabelText.length) {
+        progressLabel.textContent = stepLabelText[stepIndex];
+      }
+
+
+      // Update button labels
+      prevBtn.disabled = (stepIndex === 0);
+      if (stepIndex === totalSteps - 1) {
+        nextBtn.textContent = 'Submit Response';
+        nextBtn.classList.remove('bg-ibcaGreen', 'hover:bg-ibcaGreenHover');
+        nextBtn.classList.add('bg-ibcaPurple', 'hover:bg-ibcaPurpleHover');
+      } else {
+        nextBtn.textContent = 'Next';
+        nextBtn.classList.remove('bg-ibcaPurple', 'hover:bg-ibcaPurpleHover');
+        nextBtn.classList.add('bg-ibcaGreen', 'hover:bg-ibcaGreenHover');
+      }
+
+
+      // Scroll form to top of viewport
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+
+    // Evaluates constraints for the current active form page
+    function validateCurrentStep() {
+      if (currentStep === 0) {
+        const nameVal = document.getElementById('input-name').value.trim();
+        const emailVal = document.getElementById('input-email').value.trim();
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        
+        state.name = nameVal;
+        state.email = emailVal;
+
+
+        if (!nameVal || !emailVal) {
+          setValidationError("Please make sure you have filled in both your name and email address.");
+          return false;
+        }
+        if (!emailRegex.test(emailVal)) {
+          setValidationError("Please enter a valid work email address format.");
+          return false;
+        }
+      }
+
+
+      if (currentStep === 1) {
+        const selectedFreq = form.querySelector('input[name="useFrequency"]:checked');
+        const selectedConf = form.querySelector('input[name="confidence"]:checked');
+        
+        if (!selectedFreq) {
+          setValidationError("Please answer: '1. How often do you currently use Generative AI tools (like Gemini) for work tasks?'");
+          return false;
+        }
+        if (!selectedConf) {
+          setValidationError("Please answer: '2. How confident are you in your understanding of what Generative AI is and how it works?'");
+          return false;
+        }
+
+
+        state.useFrequency = selectedFreq.value;
+        state.confidence = selectedConf.value;
+      }
+
+
+      if (currentStep === 2) {
+        const selectedComfort = form.querySelector('input[name="comfort"]:checked');
+        const selectedUseful = form.querySelector('input[name="usefulness"]:checked');
+
+
+        if (!selectedComfort) {
+          setValidationError("Please answer: '3. How comfortable do you currently feel using Gemini in your day-to-day role?'");
+          return false;
+        }
+        if (!selectedUseful) {
+          setValidationError("Please answer: '4. How useful do you think Generative AI could be in improving the efficiency and quality of your work?'");
+          return false;
+        }
+
+
+        state.comfort = selectedComfort.value;
+        state.usefulness = selectedUseful.value;
+      }
+
+
+      if (currentStep === 3) {
+        const selectedTime = form.querySelector('input[name="timeSaved"]:checked');
+        if (!selectedTime) {
+          setValidationError("Please answer: '5. If you use AI, how much time do you feel it currently saves you per week?'");
+          return false;
+        }
+
+
+        state.timeSaved = selectedTime.value;
+        
+        // Grab current concerns selections
+        const checkedConcerns = Array.from(form.querySelectorAll('input[name="concerns"]:checked')).map(cb => cb.value);
+        state.concerns = checkedConcerns;
+        
+        if (checkedConcerns.includes('Other')) {
+          const otherText = document.getElementById('concern-other-text').value.trim();
+          if (!otherText) {
+            setValidationError("You checked 'Other' for your concerns. Please specify your concern in the text field.");
+            return false;
+          }
+          state.concernsOther = otherText;
+        }
+      }
+
+
+      return true;
+    }
+
+
+    // Handles the selection logic of the multi-choice concern checkboxes (Limit to max 2)
+    function setupCheckboxHandlers() {
+      const checkboxes = form.querySelectorAll('input[name="concerns"]');
+      const otherCheckbox = document.getElementById('concern-other-check');
+      const otherText = document.getElementById('concern-other-text');
+      const noConcernsCheckbox = document.getElementById('no-concerns');
+      const limitWarning = document.getElementById('concern-limit-warning');
+      const badge = document.getElementById('concern-badge');
+
+
+      checkboxes.forEach(cb => {
+        cb.addEventListener('change', () => {
+          let checked = form.querySelectorAll('input[name="concerns"]:checked');
+          
+          // Mutual exclusion logic for 'No concerns' option
+          if (cb === noConcernsCheckbox && cb.checked) {
+            checkboxes.forEach(otherCb => {
+              if (otherCb !== noConcernsCheckbox) {
+                otherCb.checked = false;
+                otherCb.parentElement.classList.remove('bg-ibcaPurpleLight/40', 'border-ibcaPurple');
+              }
+            });
+            otherText.disabled = true;
+            otherText.value = '';
+            otherText.classList.add('bg-gray-50');
+            checked = [noConcernsCheckbox];
+          } else if (cb !== noConcernsCheckbox && cb.checked) {
+            noConcernsCheckbox.checked = false;
+            noConcernsCheckbox.parentElement.classList.remove('bg-ibcaPurpleLight/40', 'border-ibcaPurple');
+            checked = form.querySelectorAll('input[name="concerns"]:checked');
+          }
+
+
+          // Enforce 2 option max ceiling
+          if (checked.length > 2) {
+            cb.checked = false;
+            cb.parentElement.classList.remove('bg-ibcaPurpleLight/40', 'border-ibcaPurple');
+            limitWarning.classList.remove('hidden');
+            showToast("You can only select up to two concerns.");
+            checked = form.querySelectorAll('input[name="concerns"]:checked');
+          } else {
+            limitWarning.classList.add('hidden');
+          }
+
+
+          // Update background focus rings on parent wrapper cards
+          checkboxes.forEach(x => {
+            const parent = x.parentElement;
+            if (x.checked) {
+              parent.classList.add('bg-ibcaPurpleLight/40', 'border-ibcaPurple');
+            } else {
+              parent.classList.remove('bg-ibcaPurpleLight/40', 'border-ibcaPurple');
+            }
+          });
+
+
+          // Toggle other text input state
+          if (otherCheckbox.checked) {
+            otherText.disabled = false;
+            otherText.classList.remove('bg-gray-50');
+            document.getElementById('other-container').classList.add('border-ibcaPurple', 'bg-ibcaPurpleLight/20');
+          } else {
+            otherText.disabled = true;
+            otherText.value = '';
+            otherText.classList.add('bg-gray-50');
+            document.getElementById('other-container').classList.remove('border-ibcaPurple', 'bg-ibcaPurpleLight/20');
+          }
+
+
+          // Update counter badge
+          badge.textContent = `${checked.length} selected`;
+        });
+      });
+    }
+
+
+    // Local validation warning rendering
+    function setValidationError(msg) {
+      errorMessage.textContent = msg;
+    }
+
+
+    function showErrorBanner() {
+      errorBanner.classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+
+    // Hide active error banner
+    function hideErrorBanner() {
+      errorBanner.classList.add('hidden');
+    }
+
+
+    // Dynamic banner toast message system (No alerts)
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      const msgEl = document.getElementById('toast-message');
+      msgEl.textContent = message;
+      
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 4000);
+    }
+
+
+    // Form submission processing
+    function submitForm() {
+      // Step 4 Q7 & Q8 validation
+      const selectedNotebook = form.querySelector('input[name="notebookLM"]:checked');
+      if (!selectedNotebook) {
+        setValidationError("Please answer: '7. Have you used NotebookLM, if at all?'");
+        showErrorBanner();
+        return;
+      }
+      
+      state.notebookLM = selectedNotebook.value;
+      state.support = document.getElementById('input-support').value.trim();
+
+
+      // Finalize display states
+      hideErrorBanner();
+      form.classList.add('hidden');
+      navControls.classList.add('hidden');
+      progressContainer.classList.add('hidden');
+      surveyHeader.classList.add('hidden');
+
+
+      // Populate Receipt Display
+      document.getElementById('thanks-personal').textContent = `Thank you, ${state.name}. We saved your pulse survey answers securely. Your feedback helps us shape future Gemini training and adoption frameworks across IBCA.`;
+      
+      populateReceipt();
+      insightsDashboard.classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+
+    // Create detailed formatted text summary receipt
+    function populateReceipt() {
+      const receiptContainer = document.getElementById('receipt-content');
+      
+      // Filter out 'Other' checkbox value in receipt to substitute with typed content
+      let displayConcerns = [...state.concerns];
+      const otherIdx = displayConcerns.indexOf('Other');
+      if (otherIdx !== -1) {
+        displayConcerns[otherIdx] = `Other: "${state.concernsOther}"`;
+      }
+      if (displayConcerns.length === 0) {
+        displayConcerns = ['None selected'];
+      }
+
+
+      const receiptHTML = `
+============================================================
+           IBCA GENERATIVE AI PULSE SURVEY RECEIPT
+           Infected Blood Compensation Authority
+============================================================
+Submission Timestamp: 18 May 2026, 11:46 AM BST
+
+
+RESPONDENT DETAILS
+------------------------------------------------------------
+Name: ${state.name}
+Email: ${state.email}
+
+
+PULSE SURVEY RESPONSES
+------------------------------------------------------------
+1. Use Frequency:
+   ${state.useFrequency}
+
+
+2. AI Understanding & Confidence Level [Scale 1 to 5]:
+   Rating: ${state.confidence} / 5
+
+
+3. Gemini Day-to-Day Comfort Level [Scale 1 to 5]:
+   Rating: ${state.comfort} / 5
+
+
+4. Generative AI Usefulness Level:
+   ${state.usefulness}
+
+
+5. Estimated AI Weekly Time Saved:
+   ${state.timeSaved}
+
+
+6. Top Concerns Regarding Generative AI at Work:
+   ${displayConcerns.map(c => `- ${c}`).join('\n   ')}
+
+
+7. NotebookLM Usage History:
+   ${state.notebookLM}
+
+
+8. Training, Support, or Resource Requests:
+   ${state.support ? state.support : "None requested"}
+
+
+============================================================
+We appreciate your continuous support and active learning.
+      `;
+      receiptContainer.textContent = receiptHTML.trim();
+    }
+
+
+    // Switch between Receipt View and Interactive Statistics View
+    function switchDashboardTab(tabId) {
+      const summaryTab = document.getElementById('tab-summary');
+      const chartsTab = document.getElementById('tab-charts');
+      const summaryBtn = document.getElementById('tab-summary-btn');
+      const chartsBtn = document.getElementById('tab-charts-btn');
+
+
+      if (tabId === 'summary') {
+        summaryTab.classList.remove('hidden');
+        chartsTab.classList.add('hidden');
+        summaryBtn.className = "py-2.5 px-4 text-md font-bold border-b-2 border-ibcaGreen text-ibcaGreen focus:outline-none";
+        chartsBtn.className = "py-2.5 px-4 text-md font-bold border-b-2 border-transparent text-ibcaMuted hover:text-ibcaText focus:outline-none";
+      } else {
+        summaryTab.classList.add('hidden');
+        chartsTab.classList.remove('hidden');
+        summaryBtn.className = "py-2.5 px-4 text-md font-bold border-b-2 border-transparent text-ibcaMuted hover:text-ibcaText focus:outline-none";
+        chartsBtn.className = "py-2.5 px-4 text-md font-bold border-b-2 border-ibcaGreen text-ibcaGreen focus:outline-none";
+      }
+    }
+
+
+    // Handles downloading response block as client-side text file
+    function downloadReceipt() {
+      const text = document.getElementById('receipt-content').textContent;
+      const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `IBCA_AI_Pulse_Receipt_${state.name.replace(/\s+/g, '_')}.txt`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+      showToast("Your receipt file has been downloaded successfully.");
+    }
+
+
+    // Copies survey receipt contents securely to user clipboard with execution frame support fallback
+    function copyToClipboard() {
+      const text = document.getElementById('receipt-content').textContent;
+      const copyBtn = document.getElementById('copy-btn');
+      
+      // Iframe-proof fallback clipboard routine
+      const textArea = document.createElement("textarea");
+      textArea.value = text;
+      textArea.style.position = "fixed"; // prevent scrolling to bottom of screen
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      
+      try {
+        const successful = document.execCommand('copy');
+        if (successful) {
+          copyBtn.textContent = "Receipt Copied!";
+          showToast("Survey receipt copied to clipboard successfully.");
+          setTimeout(() => {
+            copyBtn.innerHTML = `
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+              Copy Response Receipt
+            `;
+          }, 3000);
+        } else {
+          showToast("Failed to copy receipt. Please select the text and copy manually.");
+        }
+      } catch (err) {
+        showToast("Error executing clipboard utility. Please select text manually.");
+      }
+      document.body.removeChild(textArea);
+    }
+
+
+    // Full state reset of survey to start anew
+    function resetSurvey() {
+      form.reset();
+      
+      // Remove visual focus classes from cards
+      document.querySelectorAll('input[type="radio"]').forEach(radio => {
+        const parent = radio.parentElement;
+        if (parent && parent.tagName === 'LABEL') {
+          parent.classList.remove('bg-ibcaGreenLight/30', 'border-ibcaGreen', 'bg-ibcaPurpleLight', 'border-ibcaPurple');
+        }
+      });
+      document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+        const parent = checkbox.parentElement;
+        if (parent && parent.tagName === 'LABEL') {
+          parent.classList.remove('bg-ibcaPurpleLight/40', 'border-ibcaPurple');
+        }
+      });
+
+
+      // Reset state properties
+      state.name = '';
+      state.email = '';
+      state.useFrequency = '';
+      state.confidence = '';
+      state.comfort = '';
+      state.usefulness = '';
+      state.timeSaved = '';
+      state.concerns = [];
+      state.concernsOther = '';
+      state.notebookLM = '';
+      state.support = '';
+
+
+      // Reset concern checklist configurations
+      document.getElementById('concern-badge').textContent = '0 selected';
+      document.getElementById('concern-other-text').disabled = true;
+      document.getElementById('other-container').classList.remove('border-ibcaPurple', 'bg-ibcaPurpleLight/20');
+      document.getElementById('concern-limit-warning').classList.add('hidden');
+
+
+      // Unhide primary interfaces
+      form.classList.remove('hidden');
+      navControls.classList.remove('hidden');
+      progressContainer.classList.remove('hidden');
+      surveyHeader.classList.remove('hidden');
+      insightsDashboard.classList.add('hidden');
+      
+      // Re-trigger Step 0
+      currentStep = 0;
+      showStep(0);
+    }
+
+
+    // Make radio selections highly engaging with visual feedback triggers
+    const radioGroups = ['useFrequency', 'confidence', 'comfort', 'usefulness', 'timeSaved', 'notebookLM'];
+    radioGroups.forEach(groupName => {
+      document.querySelectorAll(`input[name="${groupName}"]`).forEach(radio => {
+        radio.addEventListener('change', () => {
+          // Un-highlight peers
+          document.querySelectorAll(`input[name="${groupName}"]`).forEach(peer => {
+            const peerLabel = peer.parentElement;
+            if (peerLabel && peerLabel.tagName === 'LABEL') {
+              peerLabel.classList.remove('bg-ibcaGreenLight/30', 'border-ibcaGreen', 'bg-ibcaPurpleLight', 'border-ibcaPurple');
+            }
+          });
+          
+          // Highlight selected option wrapper
+          const label = radio.parentElement;
+          if (label && label.tagName === 'LABEL') {
+            const themeClass = (groupName === 'confidence' || groupName === 'comfort') ? 'bg-ibcaPurpleLight border-ibcaPurple' : 'bg-ibcaGreenLight/30 border-ibcaGreen';
+            label.classList.add(...themeClass.split(' '));
+          }
+        });
+      });
+    });
+
+
+  </script>
+</body>
+</html>
